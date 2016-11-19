@@ -14,43 +14,39 @@ Author URI: http://www.facebook.com/naieemmahmudsupto
 global variables
 **********************************/
 
-//$aim_plugin_name = 'Acxcom Inventory Adjust';
-
 /*********************************
 includes
 **********************************/
+// if (!class_exists("PHPMailer")) {
+// 	include('phpmailer/class.phpmailer.php');   
+// }
+include_once(ABSPATH . WPINC . '/class-phpmailer.php');
+$mail= new PHPMailer;
+$mail_user= new PHPMailer;
 include('includes/scripts.php'); //this controls all JS and CSS
 //include('includes/data-processing.php'); //this saves data
 include('includes/display-function.php'); //display content functions
 function deactivateContact()
 {
-	// delete_post_meta_by_key( 'main_caption' );	
-	// delete_post_meta_by_key( 'main_title' );
-	// global $wpdb;
-	// $table_name = $wpdb->prefix."font_list";
-	// $sql = "DROP TABLE `$table_name`;";	
-	// $wpdb->query($sql);
-	// global $up_theme_options;
-	// foreach($up_theme_options as $val)
-	// 		{
-	// 			if($val['type']=='google_font')
-	// 			{
-	// 				delete_option($val['id']);
-	// 			}
-	// 			else
-	// 			delete_option("plugin_options");
-	// 		}
+	global $wpdb;
+	//$table_name ="contact_form";
+	$sql = "DROP TABLE contact_form";	
+	$wpdb->query($sql);
 }
 register_deactivation_hook( __FILE__, 'deactivateContact' );
 function activateContact()
 {
-	  // global $wpdb;
-   //  $table_name = $wpdb->prefix."font_list";
-   //  $sql = "CREATE TABLE `$table_name` (
-			// `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-			// `font_name` VARCHAR( 255 ) NOT NULL ,
-			// UNIQUE ( `id` )
-			// ) COLLATE utf8_general_ci, ENGINE = InnoDB;";
-   //  $wpdb->query($sql);
+	global $wpdb;
+    //$table_name ="contact_form";
+    $sql = "CREATE TABLE contact_form (
+			`id` INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+			`title` VARCHAR(500 ) NOT NULL ,
+			`content` VARCHAR(5000) NOT NULL ,
+			`d_time` DATETIME NOT NULL ,
+			`edit_field` VARCHAR(5000) NOT NULL,
+			`others_info` VARCHAR(5000) NOT NULL ,
+			UNIQUE ( `id` )
+			)";
+    $wpdb->query($sql);
 }
 register_activation_hook( __FILE__, 'activateContact' );
