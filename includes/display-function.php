@@ -27,8 +27,9 @@ function add_scripts(){
 	wp_enqueue_script( 'jquery-ui-core' );
 	wp_enqueue_script( 'jquery-ui-datepicker');
 	wp_enqueue_script( 'jquery-ui-tabs' );
+	wp_enqueue_script( 'jquery-ui-sortable' );
 	wp_enqueue_style ( 'jquery-ui-css', plugins_url('../css/jquery-ui-classic.css',__FILE__));
-	wp_enqueue_script( 'jquery-custom', plugins_url('../js/script.js',__FILE__), array( 'jquery-ui-core','jquery-ui-datepicker'));
+	wp_enqueue_script( 'jquery-custom', plugins_url('../js/script.js',__FILE__), array( 'jquery-ui-core','jquery-ui-datepicker','jquery-ui-sortable','jquery'));
 	wp_localize_script('jquery-custom', 'site', array(
 		"url" =>admin_url( 'admin-ajax.php' ),
 		"loader"=>plugins_url( 'squares.gif', __FILE__ )
@@ -293,7 +294,6 @@ function st_contact( $atts, $content = null ){
 	return $content.$script;
 }
 add_shortcode('st_contact_form', 'st_contact');
-
 /**
  * Ajax handling codes goes here 
  */
@@ -405,7 +405,6 @@ add_action( 'wp_ajax_nopriv_save_data', 'my_action_callback' );
 		global $wpdb;
 		$title=$_POST['title'];
 		$content=$_POST['content'];
-
 		$fld =serialize($_POST['field']);
 		$e_fld=serialize($_POST['edit_field']);
 		$others=serialize($_POST['others']);
